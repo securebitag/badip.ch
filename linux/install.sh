@@ -29,3 +29,18 @@ fi
 
 # first of all we take a look for system update
 apt-get -qq update && apt-get -qq upgrade
+
+# check if cron is installed
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' cron|grep "install ok installed")
+echo Checking for cron: $PKG_OK
+if [ "" == "$PKG_OK" ]; then
+   echo "No cron installed. Installing cron."
+   apt-get -qq install cron
+fi
+# check if fail2ban is installed
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' fail2ban|grep "install ok installed")
+echo Checking for Fail2Ban: $PKG_OK
+if [ "" == "$PKG_OK" ]; then
+   echo "No Fail2Ban installed. Installing Fail2Ban."
+   apt-get -qq install fail2ban
+fi
