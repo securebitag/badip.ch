@@ -44,3 +44,11 @@ if [ "" == "$PKG_OK" ]; then
    echo "No Fail2Ban installed. Installing Fail2Ban."
    apt-get -qq install fail2ban
 fi
+
+# create ip.blacklist 
+if [ -f "/etc/fail2ban/black.list" ]; then
+   echo "black.list already exist."
+else
+   touch /etc/fail2ban/black.list
+   echo "Blacklist file created."
+fi
