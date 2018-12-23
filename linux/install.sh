@@ -15,3 +15,17 @@
 # For more Information visit www.securebit.cloud.                    #
 # This notice must remain untouched at any time.                     #
 #--------------------------------------------------------------------#
+
+# check if running on supported os
+if ! [ -f "/etc/debian_version" ]; then
+   echo "Only Debian/Ubuntu are supported. Please be patient or install it manually."
+   exit 1
+fi
+# check if script run as root
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+# first of all we take a look for system update
+apt-get -qq update && apt-get -qq upgrade
