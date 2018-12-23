@@ -52,3 +52,25 @@ else
    touch /etc/fail2ban/black.list
    echo "Blacklist file created."
 fi
+
+# get modified iptables-multiport.conf
+wget -O /tmp/iptables-multiport.conf https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/fail2ban/action.d/iptables-multiport.conf --no-check-certificate
+if [ -f "/tmp/iptables-multiport.conf" ]; then
+   diff /etc/fail2ban/action.d/iptables-multiport.conf /tmp/iptables-multiport.conf > /dev/null 2>&1
+   if [ "$?" -eq 0 ]; then
+      rm -f /tmp/iptables-multiport.conf
+      echo "No modification on iptables-multiport.conf needed."
+   else
+      if [ -f "/etc/fail2ban/action.d/iptables-multiport.conf" ]; then
+         mv /etc/fail2ban/action.d/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf.bak
+         mv /tmp/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf
+         echo "Got modified iptables-multiport.conf"
+      else
+         mv /tmp/iptables-multiport.conf /etc/fail2ban/action.d/iptables-multiport.conf
+         echo "iptables-multiport.conf installed."
+      fi
+   fi
+else
+   echo "Failure getting modified iptables-multiport.conf. Please contact 4b42 support."
+   exit
+fi
