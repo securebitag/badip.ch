@@ -15,6 +15,7 @@
 # For more Information visit www.securebit.cloud.                    #
 # This notice must remain untouched at any time.                     #
 #--------------------------------------------------------------------#
+DSTDIR="/opt/badip"
 
 # check if running on supported os
 if ! [ -f "/etc/debian_version" ]; then
@@ -71,6 +72,37 @@ if [ -f "/tmp/iptables-multiport.conf" ]; then
       fi
    fi
 else
-   echo "Failure getting modified iptables-multiport.conf. Please contact 4b42 support."
+   echo "Failure getting modified iptables-multiport.conf. Please contact Securebit support."
+   exit
+fi
+
+
+# get update.sh
+if ! [ -d ${DSTDIR} ]; then
+   mkdir -p ${DSTDIR}
+fi
+wget -O /tmp/update.sh https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/update.sh --no-check-certificate
+if [ -f "/tmp/update.sh" ]; then
+   diff ${DSTDIR}/update.sh /tmp/update.sh > /dev/null 2>&1
+   if [ "$?" -eq 0 ]; then
+      rm -f /tmp/update.sh
+      echo "No new version of update.sh available."
+   else
+      if [ -f "${DSTDIR}/update.sh" ]; then
+         mv ${DSTDIR}/update.sh ${DSTDIR}/update.sh.bak
+         mv /tmp/update.sh ${DSTDIR}/update.sh
+         chmod +x ${DSTDIR}/update.sh
+         echo "New Version was downloaded. Old one are backed up."
+      else
+         read -p "Please insert your API-Key." APIKEY
+         echo $APIKEY > ${DSTDIR}/api.key
+         chmod 700 ${DSTDIR}/api.key
+         mv /tmp/update.sh ${DSTDIR}/update.sh
+         chmod +x ${DSTDIR}/update.sh
+         echo "update.sh downloaded."
+      fi
+   fi
+else
+   echo "Failure getting update.sh. Please contact Securebit support."
    exit
 fi
