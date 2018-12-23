@@ -106,3 +106,16 @@ else
    echo "Failure getting update.sh. Please contact Securebit support."
    exit
 fi
+
+# create crontab
+if [ -f "${DSTDIR}/badip_cron" ]; then
+   echo "Crontab already exist. Let's do a fail2ban reload."
+   ${DSTDIR}/update.sh
+else
+   crontab -l > ${DSTDIR}/badip_cron
+   echo "0 0 * * * ${DSTDIR}/update.sh" >> ${DSTDIR}/badip_cron
+   crontab ${DSTDIR}/badip_cron
+   echo "Crontab created to run every day 12AM. Please use 'crontab -e' to modify."
+   ${DSTDIR}/update.sh
+fi
+exit
