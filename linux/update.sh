@@ -33,8 +33,8 @@ fi
 if [ ! -d "/etc/fail2ban/" ]; then
    echo "please install fail2ban"
    exit 1
-elif [ ! -e "/etc/fail2ban/ip.blacklist" ]; then
-   touch /etc/fail2ban/ip.blacklist
+elif [ ! -e "/etc/fail2ban/black.list" ]; then
+   touch /etc/fail2ban/black.list
 fi
 # check if apikey not empty
 if [ -z "$APIKEY" ]; then
