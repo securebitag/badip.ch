@@ -53,6 +53,13 @@ else
    touch /etc/fail2ban/black.list
    echo "Blacklist file created."
 fi
+# create badip.list 
+if [ -f "/etc/fail2ban/badip.list" ]; then
+   echo "badip.list already exist."
+else
+   touch /etc/fail2ban/badip.list
+   echo "BadIP.list file created."
+fi
 
 # get modified iptables-multiport.conf
 wget -O /tmp/iptables-multiport.conf https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/fail2ban/action.d/iptables-multiport.conf --no-check-certificate
