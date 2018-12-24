@@ -42,7 +42,7 @@ if [ -z "$APIKEY" ]; then
 fi
 # files
 IPS=$(cat /etc/fail2ban/black.list)
-status=`wget --header="APIKEY:${APIKEY}" --post-data="ips=$IPS" -O /tmp/black.list https://api.badip.ch --no-check-certificate 2>&1|egrep "HTTP"|awk {'print $6'}`
+status=`wget --header="APIKEY:${APIKEY}" --post-data="ips=$IPS" -O /tmp/black.list https://api.badip.ch/all.txt --no-check-certificate 2>&1|awk '/^  HTTP/{print $2}'
 if [ "$status" == 200 ]; then
    rm -f /etc/fail2ban/black.list
    mv /tmp/black.list /etc/fail2ban/black.list
