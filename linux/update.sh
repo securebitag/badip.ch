@@ -42,12 +42,12 @@ if [ -z "$APIKEY" ]; then
 fi
 # files
 IPS=$(cat /etc/fail2ban/black.list)
-status=`wget --header="APIKEY:${APIKEY}" --no-check-certificate --post-data="ips=$IPS" -O /tmp/black.list https://api.badip.ch/all.txt --server-response 2>&1|awk '/^  HTTP/{print $2}'`
+status=`wget --header="APIKEY:${APIKEY}" --no-check-certificate --post-data="ips=$IPS" -O /tmp/badip.list https://api.badip.ch/all.txt --server-response 2>&1|awk '/^  HTTP/{print $2}'`
 if [ "$status" == 200 ]; then
-   rm -f /etc/fail2ban/black.list
-   mv /tmp/black.list /etc/fail2ban/black.list
-elif [ -e "/tmp/black.list" ]; then
-   echo $(cat /tmp/black.list);
+   rm -f /etc/fail2ban/badip.list
+   mv /tmp/badip.list /etc/fail2ban/badip.list
+   # reload fail2ban service
+   service fail2ban reload
+elif [ -e "/tmp/badip.list" ]; then
+   echo $(cat /tmp/badip.list);
 fi
-# reload fail2ban service
-service fail2ban reload
