@@ -83,7 +83,7 @@ else
    exit
 fi
 # get modified iptables-badip.conf
-wget -O /tmp/iptables-multiport.conf https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/fail2ban/action.d/iptables-badip.conf --no-check-certificate
+wget -O /tmp/iptables-badip.conf https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/fail2ban/action.d/iptables-badip.conf --no-check-certificate
 if [ -f "/tmp/iptables-badip.conf" ]; then
    diff /etc/fail2ban/action.d/iptables-badip.conf /tmp/iptables-baadip.conf > /dev/null 2>&1
    if [ "$?" -eq 0 ]; then
