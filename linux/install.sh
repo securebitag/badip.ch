@@ -82,28 +82,6 @@ else
    echo "Failure getting modified iptables-multiport.conf. Please contact Securebit support."
    exit
 fi
-# get modified iptables-badip.conf
-wget -O /tmp/iptables-badip.conf https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/fail2ban/action.d/iptables-badip.conf --no-check-certificate
-if [ -f "/tmp/iptables-badip.conf" ]; then
-   diff /etc/fail2ban/action.d/iptables-badip.conf /tmp/iptables-baadip.conf > /dev/null 2>&1
-   if [ "$?" -eq 0 ]; then
-      rm -f /tmp/iptables-badip.conf
-      echo "No modification on iptables-badip.conf needed."
-   else
-      if [ -f "/etc/fail2ban/action.d/iptables-badip.conf" ]; then
-         mv /etc/fail2ban/action.d/iptables-badip.conf /etc/fail2ban/action.d/iptables-badip.conf.bak
-         mv /tmp/iptables-badip.conf /etc/fail2ban/action.d/iptables-badip.conf
-         echo "Got modified iptables-badip.conf"
-      else
-         mv /tmp/iptables-badip.conf /etc/fail2ban/action.d/iptables-badip.conf
-         echo "iptables-badip.conf installed."
-      fi
-   fi
-else
-   echo "Failure getting modified iptables-badip.conf. Please contact Securebit support."
-   exit
-fi
-
 
 # get update.sh
 if ! [ -d ${DSTDIR} ]; then
