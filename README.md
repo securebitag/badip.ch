@@ -10,5 +10,10 @@ wget https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/install
 chmod +x /tmp/install.sh
 /tmp/install.sh
 ```
+## Manual
+If needed you can create own scripts to parse logfiles and report bad ip-addresses:
+```
+curl -X POST -H 'APIKEY:<YOUR-API-KEY>' -d 'ip=10.10.10.10' https://api.badip.ch/ipv4.txt
+```
 
 # Using
