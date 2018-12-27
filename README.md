@@ -6,7 +6,7 @@ Secure your infrastructure today against targeted and automated attacks and pote
 Fail2ban is the easiest way to report ip addresses of attackers attacking your Linux systems.
 The installation is very simple:
 ```
-wget https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/install.sh -O /tmp/install.sh
+wget --no-check-certificate https://raw.githubusercontent.com/securebitag/badip.ch/master/linux/install.sh -O /tmp/install.sh
 chmod +x /tmp/install.sh
 /tmp/install.sh
 ```
