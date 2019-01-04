@@ -17,3 +17,12 @@ curl -X POST -H 'APIKEY:<YOUR-API-KEY>' -d 'ip=10.10.10.10' https://api.badip.ch
 ```
 
 # Using
+## MikroTik
+Create firewall filter at the top, to block ip addresses in address-list badip:
+```
+/ip firewall filter
+add action=drop chain=input src-address-list=badip
+add action=drop chain=forward src-address-list=badip
+add action=drop chain=forward dst-address-list=badip
+add action=drop chain=output dst-address-list=badip
+```
